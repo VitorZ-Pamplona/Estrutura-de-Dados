@@ -1,17 +1,16 @@
-#define Max 100
-
 typedef struct{
-    int dados[Max];
+    int *dados;
     int n;
     int nmax;
 } tlista;
 
-extern void cria_lista (tlista *lista) ;
-extern int verifica_vazia (tlista lista) ;
-extern int verifica_cheia (tlista lista) ;
-extern int tamanho (tlista lista) ;
+extern void cria_lista (tlista *lista, int tam) ;
+extern int verifica_vazia (tlista *lista) ;
+extern int verifica_cheia (tlista *lista) ;
+extern int tamanho (tlista *lista) ;
 extern int obter_elemento (tlista *lista, int pos) ;
 extern int obter_posicao (tlista *lista, int pos) ;
-extern int insere (tlista *lista, int pos , int dado) ;
+extern void insere (tlista *lista, int pos , int dado) ;
 extern int retira (tlista *lista, int pos) ;
-
+extern void opcao (tlista *lista, int op);
+extern int menu () ;
