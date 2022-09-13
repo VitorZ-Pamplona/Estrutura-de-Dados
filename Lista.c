@@ -1,5 +1,5 @@
 /****
-Módulo: Lista Sequencial
+Módulo: Lista Encadeada
 Autor: Vitor Zimbrunes Pamplona
 Data: 07/09/2022
 Última Alteração: 07/09/2022
