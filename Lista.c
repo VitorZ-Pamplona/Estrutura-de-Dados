@@ -2,7 +2,7 @@
 Módulo: Lista Sequencial
 Autor: Vitor Zimbrunes Pamplona
 Data: 07/09/2022
-Última Alteração: 07/09/2022
+Última Alteração: 13/09/2022
 Descrição: Arquivo do exercicio de programação -> Lista_sequencial
 ****/
 #include "Lista.h"
