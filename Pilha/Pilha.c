@@ -2,117 +2,116 @@
 #include <stdlib.h>
 #include "Pilha.h"
 
-//Cria uma pilha
-void criar( pilha *e, int l){ 
-    e->topo = -1;
-    e->limite = l;
-    e->eElem = (float*)malloc (l * sizeof(float));
+void criar(pilha *e){ 
+    e->topo = (No*) malloc(sizeof(No));
+    e->topo = NULL;
+    e->eElem = 0;
 }
 
-//Identifica se a pilha esta vazia ou ocupada
-int vazia(struct pilha *e){ 
-    if(e->topo == -1){
-        return 1; //vazia
-    }else{
-        return 0; //ocupada
+int vazia(pilha *e){ 
+    if(e->eElem == 0){
+        return -1;
     }
+    return 0;
 }
 
-//Identifica se a pilha esta cheia
-int cheia(struct pilha *e){ 
-    if(e->topo == e->limite){
-        return 1;
-    }else{
-        return 0;
-    }
+int tamanho(pilha *e){
+    return e->eElem;
 }
 
-//Adiciona o novo valor inserido ao topo da pilha
-void adicionar(struct pilha *e, float valor){ 
-    e->topo++;
-    e->eElem [e->topo] = valor;
+int top(pilha *e){
+    return e->topo->conteudo;
 }
 
-//Retira o elemento que esta no topo
-float retira(struct pilha *e){ 
-    float valor = e->eElem[e->topo];
-    e->topo--;
+int push(pilha *e, int valor){ 
+    No *p = (No*) malloc(sizeof(No));
+    p->conteudo = valor;
+    p->prox = e->topo;
+    e->topo = p;
+    e->eElem++;
     return valor;
 }
 
-//Repete a função de remoção até a pilha estar vazia
-void limpar(struct pilha *e){ 
-    if (e->topo != -1){
-        while(e->topo != -1){
-            e->topo--;
-            free(e);
-        }
-    }
-    else{
-        printf("pilha vazia\n");
-    }
+int pop(struct pilha *e){
+    No *p = e->topo;
+    int valor = p->conteudo;
+
+    e->topo = p->prox;
+    e->eElem--;
+
+    free(p);
+    return valor;
 }
 
 void menu(){
-    printf("\n|        MENU           |\n");
-    printf("|    Criar pilha    [1] |\n");
-    printf("|  Push (empilhar)  [2] |\n");
-    printf("| Pop (desempilhar) [3] |\n");
-    printf("|   Limpar pilha    [4] |\n");
-    printf("|       Sair        [5] |\n");
+    printf("\n|           MENU              |\n");
+    printf("|       Criar pilha       [1] |\n");
+    printf("|  Testar se pilha vazia  [2] |\n");
+    printf("|     Tamanho da pilha    [3] |\n");
+    printf("|  Top (Consultar o topo) [4] |\n");
+    printf("|     Push (empilhar)     [5] |\n");
+    printf("|    Pop (desempilhar)    [6] |\n");
+    printf("|           Sair          [0] |\n");
     printf("\nInsira uma opção: ");
 
 }
 
 int main(){
-    struct pilha minhapilha;
-    int limite, opcao;
-    float valor;
+    pilha pilha;
+    int valor;
+    int op = 1;
 
-    while(1){//Loop infinito
+    do{
         menu();
-        scanf("%d",&opcao);
+        scanf("%d",&op);
 
-        switch (opcao){
+        switch (op){
 
-            case 1: //Criar pilha
-
-                printf("\nLimite da pilha? ");
-                scanf("%d", &limite);
-                criar(&minhapilha, limite-1);
+            case 1:
+                criar(&pilha);
+                break;
+            
+            case 2:
+                if (vazia(&pilha) == -1){
+                    printf ("\nA pilha está vazia!\n");
+                }else{
+                    printf ("\nA pilha tem elementos!\n");
+                }
                 break;
 
-            case 2://Push
-
-                if (cheia(&minhapilha) ==1){
-                    printf("\n Pilha esta cheia! \n");    
+            case 3:
+                printf ("\nO tamanho da pilha é: %d\n", tamanho(&pilha));
+                break;
+            
+            case 4:
+                if (vazia(&pilha) == -1){
+                    printf("\n A pilha está vazia! \n");    
                 }else{
-                    printf("\nInsira o valor: ");
-                    scanf("%f", &valor);
-                    adicionar(&minhapilha,valor);
+                    printf("\n O topo da pilha é : %d\n", top(&pilha));
                 }
                 break;
             
-            case 3://Pop
+            case 5:
+                printf ("\n Insira o valor:");
+                scanf (" %d", &valor);
+                push (&pilha, valor);
+                printf ("\n O valor: %d, foi inserido com sucesso!", valor);
+                break;
 
-                if (vazia(&minhapilha) == 1){
-                    printf("\n Pilha esta vazia! \n");    
-                }else{
-                    valor = retira(&minhapilha);
-                    printf("\n%.2f Retirado." ,valor);
+            case 6:
+                if (vazia(&pilha) == -1){
+                    printf ("\n A pilha está vazia! \n");
+                }else {
+                    printf ("\n O valor :%d, foi retirado!", pop(&pilha));
                 }
                 break;
-            
-            case 4://Limpar
 
-                limpar(&minhapilha);
-                printf("\nPilha limpa!");
+            case 0:
+                op = 0;
                 break;
 
-            case 5://Saida
-                exit(0);
-                
-            default: printf("\nValor invalido!\n");
+            default:
+                printf("\nOpção invalida!\n");
         }
-    }
+    } while (op);
 }

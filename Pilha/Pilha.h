@@ -1,16 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct pilha {
-    int topo;
-    int limite;
-    float *eElem;
+typedef struct No {
+    int conteudo;
+    struct No *prox;
+}No;
+
+typedef struct pilha{
+    No *topo;
+    int eElem;
 }pilha;
 
-extern void criar (pilha *e, int l);
+extern void criar (pilha *e);
 extern int vazia(pilha *e);
-extern int cheia(pilha *e);
-extern void adicionar(pilha *e, float valor);
-extern float retira(pilha *e);
-extern void limpar(pilha *e);
+extern int tamanho (pilha *e);
+extern int top (pilha *e);
+extern int push(pilha *e, int valor);
+extern int pop(pilha *e);
 extern void menu();
